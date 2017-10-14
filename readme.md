@@ -146,7 +146,7 @@ curl -k https://starter-test-starter-<your_team_name>.<cluster>.altemista.cloud/
 ## Automate build ##
 The builds will be automated by adding a web hook to GitLab.
 
-1. Navigate in OpenShift console to Builds / Starter<your_team_name> / Configuration and copy the generic web hook URL.
+1. Navigate in OpenShift console to Builds / Starter-Test / Configuration and copy the generic web hook URL.
 2. Navigate in GitHub to your Project / Settings / Integrations and past the URL in the URL field. Leve secret empty, *uncheck SSL verification* and click "Add webhook".
 
 Click the "Test" button behind the newly created web hook and check that a new build in OpenShift was triggered.
