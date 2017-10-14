@@ -1,0 +1,29 @@
+version: '2.0'
+services:
+  starter:
+    build: .
+    ports:
+      - "8000:8000" 
+    environment:
+      - MONGODB_HOST=starterdb
+    networks:
+      - default
+  starterdb:
+    image: "centos/mongodb-26-centos7"
+    ports:
+      - "27017:27017" 
+    environment:
+     - MONGODB_USER=user
+     - MONGODB_PASSWORD=password
+     - MONGODB_DATABASE=starterdb
+     - MONGODB_ADMIN_PASSWORD=admin_password
+    volumes:
+      - starterdb:/data/db
+    networks:
+     - default
+
+volumes:
+  starterdb:
+
+networks:
+  default:
