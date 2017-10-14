@@ -114,28 +114,33 @@ $ oc login <cluster>.altemista.cloud:8443 -u "<username>" -p "<password>"
 
 Create a new project (with a unique name):
 ```
-$ oc new-project starter<your_team_name>
+$ oc new-project starter-<your_team_name>
 ```
 
 Create build credentials so that OpenShift can access GitLab. Make sure you provide your GitLab credentials, not the OpenShift credentials. If you use a public repo, feel free to skip this step.
 ```
-./createBuildsecret.sh starter <github-user> <github-password>
+./createBuildsecret.sh starter-<your_team_name> <github-user> <github-password>
+```
+
+To add persistence on OpenStack based environments run:
+```
+./createGluster.sh starter-<your_team_name>
+./createAppdb.sh starter-<your_team_name> gluster test
+```
+
+Alternatively, to add persistence on AWS based environments run:
+```
+./createAppdb.sh starter-<your_team_name> aws test
 ```
 
 Finally run to create a test environment for the master branch:
 ```
-./createStarter.sh starter \#master test
-```
-
-To add persistence run:
-```
-./createGluster.sh starter
-./createPassionatordb.sh starter gluster test
+./createApp.sh starter-<your_team_name> starter https://github.com/Altemista/starter-golang.git test
 ```
 
 And here we go:
 ```
-curl -k https://starter-test-passionator.ops.altemista.cloud/html/
+curl -k https://starter-<your_team_name>-test-starter.ops.altemista.cloud/html/
 ```
 
 ## Automate build ##

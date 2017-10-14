@@ -34,7 +34,7 @@ func getSession() *mgo.Session {
 		return nil
 	}
 	MainLogger.Printf("Connecting to mongo on %s.\n", host)
-	s, err := mgo.Dial("mongodb://user:password@" + host + ":27017/passionatordb")
+	s, err := mgo.Dial("mongodb://user:password@" + host + ":27017/starterdb")
 	if err != nil {
 		MainLogger.Panicf("Cannot connect to MongoDB on host %s: %s\n", host, err)
 		return nil

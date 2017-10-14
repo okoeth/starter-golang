@@ -10,7 +10,7 @@ if [ x = x$1 -o x = x$2 -o x = x$3 ]; then
 fi
 
 NAMESPACE=$1
-APP=$1
+APP=$2
 GIT_URL=$3
 
 if [ x = x$4 ]; then
