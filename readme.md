@@ -117,9 +117,9 @@ Create a new project (with a unique name):
 $ oc new-project starter-<your_team_name>
 ```
 
-Create build credentials so that OpenShift can access GitLab. Make sure you provide your GitLab credentials, not the OpenShift credentials. If you use a public repo, feel free to skip this step.
+Create build credentials so that OpenShift can access Git. Make sure you provide your Git credentials, not the OpenShift credentials. 
 ```
-./createBuildsecret.sh starter-<your_team_name> <github-user> <github-password>
+./createBuildsecret.sh starter-<your_team_name> <git-user> <git-password>
 ```
 
 To add persistence on OpenStack based environments run:
@@ -140,7 +140,7 @@ Finally run to create a test environment for the master branch:
 
 And here we go:
 ```
-curl -k https://starter-<your_team_name>-test-starter.ops.altemista.cloud/html/
+curl -k https://starter-test-starter-<your_team_name>.<cluster>.altemista.cloud/html/
 ```
 
 ## Automate build ##
