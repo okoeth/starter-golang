@@ -1,6 +1,6 @@
 #!/bin/bash
 if [ x = x$1 ]; then
-    echo "Usage: ./build.sh <service>"
+    echo "Usage: ./restart.sh <service>"
     echo "    <service>  : The service, e.g. starter"
   exit
 fi

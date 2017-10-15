@@ -1,6 +1,10 @@
-hash: 58d0fdc8c7ba154ecbb08d634d1e9097c911ad20fc962aa64058910f2d1f037c
-updated: 2017-10-14T14:06:19.51328174+02:00
+hash: 29c048e0fe0f77e0e123520ccc260de5e601762a10e35d9f37f9b59b84e2f06f
+updated: 2017-10-14T17:15:29.438625255+02:00
 imports:
+- name: github.com/golang/mock
+  version: 6e20fef50e74e443696bc32b693cf286b612d45b
+  subpackages:
+  - gomock
 - name: goji.io
   version: 0d89ff54b2c18c9c4ba530e32496aef902d3c6cd
   subpackages:

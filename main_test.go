@@ -7,40 +7,32 @@ import (
 
 	"goji.io"
 	"goji.io/pat"
-	mgo "gopkg.in/mgo.v2"
 )
 
-var theSession *mgo.Session
-
-func getLocalSession() *mgo.Session {
-	s, err := mgo.Dial("mongodb://user:password@localhost:27017/starterdb")
-	if err != nil {
-		return nil
-	}
-	return s
-}
+var testGreetingController *GreetingController
 
 func TestMain(m *testing.M) {
-	// Setup database connection
-	theSession = getLocalSession()
-	if theSession == nil {
-		MainLogger.Printf("Skipping test, no local database.\n")
-		os.Exit(0)
+	host := os.Getenv("MONGODB_HOST")
+	if host != "" {
+		MainLogger.Printf("Connected to database for test.")
+		testGreetingController = NewGreetingController(MongoSessionWrapper{GetSession()})
+	} else {
+		MainLogger.Printf("Mocking database, no local database found: missing MONGODB_HOST in env")
+		testGreetingController = NewGreetingController(nil)
 	}
-	MainLogger.Printf("Connected to local database.\n")
+
 	// Setup web server
 	mux := goji.NewMux()
-	// Routes for greeting_controller_test
-	AddGreetingController(theSession, mux)
+	// Routes for controllers
+	testGreetingController.AddHandlers(mux)
 	// Routes for query_helper_test
 	mux.HandleFunc(pat.Get("/test/extract/simple"), HandleSimpleExtract)
 	mux.HandleFunc(pat.Get("/test/extract/regex"), HandleRegExExtract)
-	MainLogger.Printf("Created routes: %v", mux)
 	server := httptest.NewServer(mux)
+	defer server.Close()
 	GreetingServerURL = server.URL
 	MainLogger.Printf("Creating server: %s", GreetingServerURL)
 	// Run tests
 	i := m.Run()
-	defer server.Close()
 	os.Exit(i)
 }

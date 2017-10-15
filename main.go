@@ -21,13 +21,16 @@ func init() {
 func main() {
 	// Set-up routes
 	mux := goji.NewMux()
-	AddGreetingController(getSession(), mux)
+	gc := NewGreetingController(MongoSessionWrapper{GetSession()})
+	//gc := NewGreetingController(GetSession())
+	gc.AddHandlers(mux)
 	mux.Handle(pat.Get("/html/*"), http.FileServer(http.Dir("./")))
 	MainLogger.Printf("System is ready.\n")
 	http.ListenAndServe("0.0.0.0:8000", mux)
 }
 
-func getSession() *mgo.Session {
+// GetSession creates session to MongoDB
+func GetSession() *mgo.Session {
 	host := os.Getenv("MONGODB_HOST")
 	if host == "" {
 		MainLogger.Panicln("Missing mongo hostname in env. Try: export MONGODB_HOST=<hostname>")

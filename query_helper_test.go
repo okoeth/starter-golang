@@ -107,7 +107,7 @@ func HandleSimpleExtract(w http.ResponseWriter, r *http.Request) {
 }
 
 func TestExtractSimpleQuery(t *testing.T) {
-	MainLogger.Printf("Start TestBuildSimpleQuery\n")
+	t.Logf("Start TestBuildSimpleQuery\n")
 	q := []QueryElement{
 		QueryElement{Key: "key0", Op: "eq", Val: "val0"},
 		QueryElement{Key: "key1", Op: "eq", Val: "val1"},

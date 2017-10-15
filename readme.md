@@ -36,7 +36,7 @@ UI afficionados may also use a browser of choice. Another nice test client is [P
 To test the persitence use the following commands. Mind to replace `<id>`with the id from the initial POST command.
 ```
 $ curl -X POST \
-  http://localhost:8000/v1/posts \
+  http://localhost:8000/v1/greetings \
   -H 'content-type: application/json' \
   -d '{
 	"Titel" : "Hello",
