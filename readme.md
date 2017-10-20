@@ -125,12 +125,12 @@ Create build credentials so that OpenShift can access Git. Make sure you provide
 To add persistence on OpenStack based environments run:
 ```
 ./createGluster.sh starter-<your_team_name>
-./createAppdb.sh starter-<your_team_name> gluster test
+./createAppdb.sh starter-<your_team_name> starter gluster test
 ```
 
 Alternatively, to add persistence on AWS based environments run:
 ```
-./createAppdb.sh starter-<your_team_name> aws test
+./createAppdb.sh starter-<your_team_name> starter aws test
 ```
 
 Finally run to create a test environment for the master branch:
