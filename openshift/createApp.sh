@@ -36,4 +36,21 @@ echo "Start build"
 oc start-build ${APP}$ENV -F
 
 echo "Create route"
-oc create route edge --service=${APP}$ENV
+cat <<EOF | oc create -f -
+apiVersion: v1
+kind: Route
+metadata:
+  labels:
+    f5type: altemista
+  name: starter-golang
+spec:
+  port:
+    targetPort: 8000
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  to:
+    kind: Service
+    name: ${APP}$ENV
+    weight: 100
+EOF
