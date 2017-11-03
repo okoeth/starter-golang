@@ -25,16 +25,15 @@ func NewGreetingController(session SessionWrapper) *GreetingController {
 
 // AddHandlers inserts new greeting
 func (gc *GreetingController) AddHandlers(mux *goji.Mux) {
-	mux.HandleFunc(pat.Post("/v1/greetings"), gc.CreateGreeting)
-	mux.HandleFunc(pat.Get("/v1/greetings"), gc.GetGreetings)
-	mux.HandleFunc(pat.Get("/v1/greetings/:id"), gc.GetGreeting)
-	mux.HandleFunc(pat.Delete("/v1/greetings/:id"), gc.DeleteGreeting)
-	mux.HandleFunc(pat.Put("/v1/greetings/:id"), gc.UpdateGreeting)
+	mux.HandleFunc(pat.Post("/v1/greetings"), Logger(gc.CreateGreeting))
+	mux.HandleFunc(pat.Get("/v1/greetings"), Logger(gc.GetGreetings))
+	mux.HandleFunc(pat.Get("/v1/greetings/:id"), Logger(gc.GetGreeting))
+	mux.HandleFunc(pat.Delete("/v1/greetings/:id"), Logger(gc.DeleteGreeting))
+	mux.HandleFunc(pat.Put("/v1/greetings/:id"), Logger(gc.UpdateGreeting))
 }
 
 // CreateGreeting inserts new greeting
 func (gc *GreetingController) CreateGreeting(w http.ResponseWriter, r *http.Request) {
-	MainLogger.Printf("Request: %s %s", r.Method, r.URL.Path)
 	var gm GreetingModel
 	err := json.NewDecoder(r.Body).Decode(&gm)
 	if err != nil {
@@ -60,7 +59,6 @@ func (gc *GreetingController) CreateGreeting(w http.ResponseWriter, r *http.Requ
 
 // GetGreetings retrieves all greetings
 func (gc *GreetingController) GetGreetings(w http.ResponseWriter, r *http.Request) {
-	MainLogger.Printf("Request: %s %s", r.Method, r.URL.Path)
 	var gms []GreetingModel
 	err := gc.Session.DB("starterdb").C("greetings").Find(ExtractQuery(r)).All(&gms)
 	if err != nil {
@@ -79,7 +77,6 @@ func (gc *GreetingController) GetGreetings(w http.ResponseWriter, r *http.Reques
 
 // GetGreeting retrieves specific greeting
 func (gc *GreetingController) GetGreeting(w http.ResponseWriter, r *http.Request) {
-	MainLogger.Printf("Request: %s %s", r.Method, r.URL.Path)
 	id := pat.Param(r, "id")
 	if !bson.IsObjectIdHex(id) {
 		MainLogger.Println("Invalid id")
@@ -107,7 +104,6 @@ func (gc *GreetingController) GetGreeting(w http.ResponseWriter, r *http.Request
 
 // UpdateGreeting upwrite new data to existing greeting
 func (gc *GreetingController) UpdateGreeting(w http.ResponseWriter, r *http.Request) {
-	MainLogger.Printf("Request: %s %s", r.Method, r.URL.Path)
 	id := pat.Param(r, "id")
 	if !bson.IsObjectIdHex(id) {
 		MainLogger.Println("Invalid id")
@@ -143,7 +139,6 @@ func (gc *GreetingController) UpdateGreeting(w http.ResponseWriter, r *http.Requ
 
 // DeleteGreeting removes existing greeting
 func (gc *GreetingController) DeleteGreeting(w http.ResponseWriter, r *http.Request) {
-	MainLogger.Printf("Request: %s %s", r.Method, r.URL.Path)
 	id := pat.Param(r, "id")
 	if !bson.IsObjectIdHex(id) {
 		MainLogger.Println("Invalid id")
