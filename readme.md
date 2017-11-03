@@ -40,7 +40,7 @@ $ curl -X POST \
   -H 'content-type: application/json' \
   -d '{
 	"Titel" : "Hello",
-	"Message" : "Hello, Gopher!"
+	"Message" : "Hello, Gopher2!"
   }'
 
 $ curl -X GET \
