@@ -1,5 +1,5 @@
 # Starter for Golang #
-A simple stateless REST service in Golang
+A simple stateless REST service in Golang. Build in Drone.
 
 ## Set-up ##
 
