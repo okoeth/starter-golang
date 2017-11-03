@@ -3,7 +3,12 @@ pipeline:
     image: golang
     commands:
       - go version
-      - echo $GOPATH
+      - go get goji.io
+      - go get goji.io/pat
+      - go get github.com/golang/mock/gomock
+      - go get github.com/golang/mock/mockgen
+      - go get gopkg.in/mgo.v2
+      - go get gopkg.in/mgo.v2/bson
       - go build
       - go test
 
