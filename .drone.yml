@@ -3,6 +3,8 @@ workspace:
   path: src/github.com/okoeth/starter-golang
 
 pipeline:
+  ##################################################################
+  ## Fast build
   feature-dev-build:
     image: golang
     environment:
@@ -14,8 +16,10 @@ pipeline:
       - go build
       - go test
     when:
-      branch: f-dev-*
+      branch: [ f-dev-*, master ]
 
+  ##################################################################
+  ## Full build and deploy
   feature-test-build:
     image: golang
     environment:
@@ -27,7 +31,7 @@ pipeline:
       - go build
       - go test
     when:
-      branch: f-test-*
+      branch: [ f-test-*, test ]
 
   feature-test-test:
     image: golang
@@ -36,7 +40,7 @@ pipeline:
     commands:
       - go test
     when:
-      branch: f-test-*
+      branch: [ f-test-*, test ]
 
   feature-test-deploy:
     image: okoeth/openshift-client
@@ -54,7 +58,7 @@ pipeline:
       - ./createApp.sh $NAMESPACE starter $REPOSITORY
     secrets: [ oc_user, oc_password, git_user, git_password ]
     when:
-      branch: f-test-*
+      branch: [ f-test-*, test ]
 
 services:
   mongo:
