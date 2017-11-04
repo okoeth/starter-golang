@@ -48,7 +48,7 @@ pipeline:
       - oc version
       - oc login $INSTANCE:8443 -u $OC_USER -p $OC_PASSWORD --insecure-skip-tls-verify
       - cd /go/src/github.com/okoeth/starter-golang/openshift
-      - ./createNamespace.sh $NAMESPACE
+      - ./createNamespace.sh $NAMESPACE starter
       - ./createBuildSecret.sh $NAMESPACE $GIT_USER $GIT_PASSWORD
       - ./createAppdb.sh $NAMESPACE starter aws
       - ./createApp.sh $NAMESPACE starter $REPOSITORY
