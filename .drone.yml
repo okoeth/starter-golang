@@ -5,11 +5,16 @@ workspace:
 pipeline:
   deploy:
     image: ebits/openshift-client
+    environment:
+      - NAMESPACE=starter-go-test
     commands:
       - oc version
       - oc login jp1.altemista.cloud:8443 -u altemista -p altemi\$ta --insecure-skip-tls-verify
-      - oc project starter-go-test
-      - ls /go/src/github.com/okoeth/starter-golang/openshift
+      - oc project $NAMESPACE
+      - cd /go/src/github.com/okoeth/starter-golang/openshift
+      - clean.sh $NAMESPACE starter
+      - clean.sh $NAMESPACE starterdb
+      - createBuildsecret.sh $NAMESPACE okoeth Tutn1xwgc
 
   # build:
   #   image: golang
