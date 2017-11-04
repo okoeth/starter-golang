@@ -3,61 +3,56 @@ workspace:
   path: src/github.com/okoeth/starter-golang
 
 pipeline:
-  fast-build:
+  feature-dev-build:
     image: golang
     environment:
      - MONGODB_HOST=
     commands:
       - go version
+      # Vendoring hack
       - cp -rf vendor/* /go/src
-      - ls /go/src 
       - go build
       - go test
     when:
       branch: f-dev-*
 
-  build:
+  feature-test-build:
     image: golang
     environment:
      - MONGODB_HOST=
     commands:
       - go version
-      - go get goji.io
-      - go get goji.io/pat
-      - go get github.com/golang/mock/gomock
-      - go get github.com/golang/mock/mockgen
-      - go get gopkg.in/mgo.v2
-      - go get gopkg.in/mgo.v2/bson
+      # Vendoring hack
+      - cp -rf vendor/* /go/src
       - go build
       - go test
     when:
-      branch: master
+      branch: f-test-*
 
-  test:
+  feature-test-test:
     image: golang
     environment:
      - MONGODB_HOST=mongo
     commands:
-      - echo $TEST
       - go test
-    secrets: [ test ]
     when:
       branch: master
 
-  deploy:
+  feature-test-deploy:
     image: okoeth/openshift-client
     environment:
       - NAMESPACE=starter-go-test
     commands:
       - oc version
-      - oc login jp1.altemista.cloud:8443 -u altemista -p altemi\$ta --insecure-skip-tls-verify
+      - oc login jp1.altemista.cloud:8443 -u $OC_USER -p $OC_PASSWORD --insecure-skip-tls-verify
       - oc project $NAMESPACE
       - cd /go/src/github.com/okoeth/starter-golang/openshift
       - ./clean.sh $NAMESPACE starter-test
       - ./clean.sh $NAMESPACE starterdb-test
-      - ./createBuildSecret.sh $NAMESPACE okoeth Tutn1xwgc
+      - ./createBuildSecret.sh $NAMESPACE $ $GITHUB_USER $GITHUB_PASSWORD
       - ./createAppdb.sh $NAMESPACE starter aws test
       - ./createApp.sh $NAMESPACE starter https://github.com/okoeth/starter-golang.git test
+    secrets: [ oc_user, oc_password, github_user, github_password ]
     when:
       branch: master
 
