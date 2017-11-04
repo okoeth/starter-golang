@@ -5,7 +5,7 @@ workspace:
 pipeline:
   ##################################################################
   ## Fast build
-  feature-dev-build:
+  fast-dev-build:
     image: golang
     environment:
      - MONGODB_HOST=
@@ -20,7 +20,7 @@ pipeline:
 
   ##################################################################
   ## Full build and deploy
-  feature-test-build:
+  full-test-build:
     image: golang
     environment:
      - MONGODB_HOST=
@@ -33,7 +33,7 @@ pipeline:
     when:
       branch: [ f-test-*, test ]
 
-  feature-test-test:
+  full-test-test:
     image: golang
     environment:
      - MONGODB_HOST=mongo
@@ -42,7 +42,7 @@ pipeline:
     when:
       branch: [ f-test-*, test ]
 
-  feature-test-deploy:
+  full-test-deploy:
     image: okoeth/openshift-client
     environment:
       - INSTANCE=jp1.altemista.cloud
