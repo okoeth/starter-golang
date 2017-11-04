@@ -41,14 +41,14 @@ pipeline:
   feature-test-deploy:
     image: okoeth/openshift-client
     environment:
-      - NAMESPACE=starter-go-test
+      - NAMESPACE=stg-${DRONE_BRANCH}
     commands:
       - oc version
       - oc login jp1.altemista.cloud:8443 -u $OC_USER -p $OC_PASSWORD --insecure-skip-tls-verify
       - cd /go/src/github.com/okoeth/starter-golang/openshift
-      - ./createNamespace.sh $NAMESPACE-${DRONE_BRANCH}
-      # - ./createBuildSecret.sh $NAMESPACE $GIT_USER $GIT_PASSWORD
-      # - ./createAppdb.sh $NAMESPACE starter aws test
+      - ./createNamespace.sh $NAMESPACE
+      - ./createBuildSecret.sh $NAMESPACE $GIT_USER $GIT_PASSWORD
+      - ./createAppdb.sh $NAMESPACE starter aws
       # - ./createApp.sh $NAMESPACE starter https://github.com/okoeth/starter-golang.git test
     secrets: [ oc_user, oc_password, git_user, git_password ]
     when:
