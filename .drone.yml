@@ -7,7 +7,10 @@ pipeline:
     image: ebits/openshift-client
     commands:
       - oc version
-      - ls /go/src/okoeth/starter-golang
+      - oc login jp1.altemista.cloud:8443 -u altemista -p altemi\$ta
+      - oc project starter-go-test
+      - ls /go/src/github.com/okoeth/starter-golang/openshift
+
   # build:
   #   image: golang
   #   environment:
