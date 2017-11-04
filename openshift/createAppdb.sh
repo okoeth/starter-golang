@@ -5,7 +5,7 @@ if [ x = x$1 -o x = x$2  -o x = x$3 ]; then
     echo "    <namspace> : The OpenShift namespace the service is deployed in"
     echo "    <app>      : The name of the app"
     echo "    <storage>  : Either 'aws' or 'gluster' (specifc param w/o quotes)"
-  exit
+  exit 1
 fi
 NAMESPACE=$1
 APP=$2

@@ -11,7 +11,7 @@ if [ $? -ne 0 ]; then
     echo "WARNING could not delete project" $NAMESPACE
 fi
 
-sleep 10
+sleep 5
 
 oc new-project $NAMESPACE
 if [ $? -ne 0 ]; then
