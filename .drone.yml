@@ -51,7 +51,7 @@ pipeline:
       - ./createNamespace.sh $NAMESPACE
       - ./createBuildSecret.sh $NAMESPACE $GIT_USER $GIT_PASSWORD
       - ./createAppdb.sh $NAMESPACE starter aws
-      # - ./createApp.sh $NAMESPACE starter $REPOSITORY
+      - ./createApp.sh $NAMESPACE starter $REPOSITORY
     secrets: [ oc_user, oc_password, git_user, git_password ]
     when:
       branch: f-test-*
