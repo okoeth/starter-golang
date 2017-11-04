@@ -10,7 +10,7 @@ oc get project $NAMESPACE
 if [ $? -ne 0 ]; then
     echo "Creating namespace"
     oc new-project $NAMESPACE
-if
+fi
 
 oc project $NAMESPACE
 
