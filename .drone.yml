@@ -3,6 +3,19 @@ workspace:
   path: src/github.com/okoeth/starter-golang
 
 pipeline:
+  fast-build:
+    image: golang
+    environment:
+     - MONGODB_HOST=
+    commands:
+      - go version
+      - cp -rf vendor/* /go/src
+      - ls /go/src 
+      - go build
+      - go test
+    when:
+      branch: f-dev-*
+
   build:
     image: golang
     environment:
@@ -17,6 +30,8 @@ pipeline:
       - go get gopkg.in/mgo.v2/bson
       - go build
       - go test
+    when:
+      branch: master
 
   test:
     image: golang
@@ -26,6 +41,8 @@ pipeline:
       - echo $TEST
       - go test
     secrets: [ test ]
+    when:
+      branch: master
 
   deploy:
     image: okoeth/openshift-client
@@ -41,6 +58,8 @@ pipeline:
       - ./createBuildSecret.sh $NAMESPACE okoeth Tutn1xwgc
       - ./createAppdb.sh $NAMESPACE starter aws test
       - ./createApp.sh $NAMESPACE starter https://github.com/okoeth/starter-golang.git test
+    when:
+      branch: master
 
 services:
   mongo:
