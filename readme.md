@@ -1,5 +1,5 @@
 # Starter for Golang #
-A simple stateless REST service in Golang. Build in Drone.
+A simple stateless REST service in Golang. Assembly line in Drone.
 [![Build Status](http://164.177.187.96:18000/api/badges/okoeth/starter-golang/status.svg)](http://164.177.187.96:18000/okoeth/starter-golang)
 
 ## Set-up ##
