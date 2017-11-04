@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 if [ x = x$1 -o x = x$2 ]; then
     echo "Usage: ./clean.sh <namespace> <service>"
     exit
