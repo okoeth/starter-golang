@@ -13,6 +13,8 @@ pipeline:
       - oc project $NAMESPACE
       - cd /go/src/github.com/okoeth/starter-golang/openshift
       - ls -l
+      - /go/src/github.com/okoeth/starter-golang/openshift/test.sh
+      - ./test.sh
       - ./clean.sh $NAMESPACE starter
       - ./clean.sh $NAMESPACE starterdb
       - ./createBuildsecret.sh $NAMESPACE okoeth Tutn1xwgc
