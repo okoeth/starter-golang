@@ -6,12 +6,12 @@ fi
 NAMESPACE=$1
 
 echo Namespace: $NAMESPACE
-oc delete project $NAMESPACE
+oc delete project $NAMESPACE --now=true --force=true
 if [ $? -ne 0 ]; then
     echo "WARNING could not delete project" $NAMESPACE
 fi
 
-sleep 5
+sleep 10
 
 oc new-project $NAMESPACE
 if [ $? -ne 0 ]; then
