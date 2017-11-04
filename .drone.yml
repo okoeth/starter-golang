@@ -12,8 +12,8 @@ pipeline:
       - oc login jp1.altemista.cloud:8443 -u altemista -p altemi\$ta --insecure-skip-tls-verify
       - oc project $NAMESPACE
       - cd /go/src/github.com/okoeth/starter-golang/openshift
-      - ./clean.sh $NAMESPACE starter
-      - ./clean.sh $NAMESPACE starterdb
+      - ./clean.sh $NAMESPACE starter-test
+      - ./clean.sh $NAMESPACE starterdb-test
       - ./createBuildSecret.sh $NAMESPACE okoeth Tutn1xwgc
       - ./createAppdb.sh $NAMESPACE starter aws test
       - ./createApp.sh $NAMESPACE starter https://github.com/okoeth/starter-golang.git test
