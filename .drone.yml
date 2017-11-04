@@ -45,14 +45,12 @@ pipeline:
     commands:
       - oc version
       - oc login jp1.altemista.cloud:8443 -u $OC_USER -p $OC_PASSWORD --insecure-skip-tls-verify
-      - oc project $NAMESPACE
       - cd /go/src/github.com/okoeth/starter-golang/openshift
-      - ./clean.sh $NAMESPACE starter-test
-      - ./clean.sh $NAMESPACE starterdb-test
-      - ./createBuildSecret.sh $NAMESPACE $ $GITHUB_USER $GITHUB_PASSWORD
-      - ./createAppdb.sh $NAMESPACE starter aws test
-      - ./createApp.sh $NAMESPACE starter https://github.com/okoeth/starter-golang.git test
-    secrets: [ oc_user, oc_password, github_user, github_password ]
+      - ./createNamespace $NAMESPACE-${DRONE_BRANCH}
+      # - ./createBuildSecret.sh $NAMESPACE $GIT_USER $GIT_PASSWORD
+      # - ./createAppdb.sh $NAMESPACE starter aws test
+      # - ./createApp.sh $NAMESPACE starter https://github.com/okoeth/starter-golang.git test
+    secrets: [ oc_user, oc_password, git_user, git_password ]
     when:
       branch: master
 
