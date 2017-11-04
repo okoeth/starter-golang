@@ -25,15 +25,31 @@ oc new-app $GIT_URL \
   --strategy=docker \
   -e MONGODB_HOST=${APP}db$ENV \
   --name ${APP}$ENV -n $NAMESPACE
+if [ $? -ne 0 ]; then
+    echo "ERROR in ./createApp.sh"
+    exit 1
+fi
 
 echo "Patch build"
 ./patchBuild.sh ${APP}$ENV
+if [ $? -ne 0 ]; then
+    echo "ERROR in ./createApp.sh"
+    exit 1
+fi
 
 echo "Patch deploy"
 ./patchDeploy.sh ${APP}$ENV
+if [ $? -ne 0 ]; then
+    echo "ERROR in ./createApp.sh"
+    exit 1
+fi
 
 echo "Start build"
 oc start-build ${APP}$ENV -F
+if [ $? -ne 0 ]; then
+    echo "ERROR in ./createApp.sh"
+    exit 1
+fi
 
 echo "Create route"
 cat <<EOF | oc create -f -
@@ -54,3 +70,9 @@ spec:
     name: ${APP}$ENV
     weight: 100
 EOF
+if [ $? -ne 0 ]; then
+    echo "ERROR in ./createApp.sh"
+    exit 1
+fi
+
+exit 0

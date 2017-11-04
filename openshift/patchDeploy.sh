@@ -19,12 +19,22 @@ oc patch dc/$APP_NAME -p '{
     "spec":{
         "strategy":{
             "type":"Recreate"}}}'
+if [ $? -ne 0 ]; then
+    echo "ERROR in ./patchDeploy.sh"
+    exit 1
+fi
+
 oc patch dc/$APP_NAME -p '{
     "spec":{
         "strategy":{
             "resources":{
                 "limits":{
                     "memory": "'$MEM_LIMIT'"}}}}}'
+if [ $? -ne 0 ]; then
+    echo "ERROR in ./patchDeploy.sh"
+    exit 1
+fi
+
 oc patch dc/$APP_NAME -p '{
     "spec":{
         "template":{
@@ -34,3 +44,9 @@ oc patch dc/$APP_NAME -p '{
                     "resources":{
                         "limits":{
                             "memory": "'$MEM_LIMIT'"}}}]}}}}'
+if [ $? -ne 0 ]; then
+    echo "ERROR in ./patchDeploy.sh"
+    exit 1
+fi
+
+exit 0

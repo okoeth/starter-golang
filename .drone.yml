@@ -4,7 +4,7 @@ workspace:
 
 pipeline:
   deploy:
-    image: ebits/openshift-client
+    image: okoeth/openshift-client
     environment:
       - NAMESPACE=starter-go-test
     commands:

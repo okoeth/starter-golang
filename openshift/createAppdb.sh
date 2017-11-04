@@ -30,11 +30,19 @@ oc new-app \
     -e MONGODB_DATABASE=${APP}db \
     -e MONGODB_ADMIN_PASSWORD=admin_password \
     centos/mongodb-26-centos7
+if [ $? -ne 0 ]; then
+    echo "ERROR in ./createAppdb.sh"
+    exit 1
+fi
 
 # Create volume claim
 echo "Create volume claim"
 sed 's/APP/'$APP'/g' < appdb_claim_$STORAGE.yaml > ${APP}db_claim_$STORAGE.yaml
 oc create -f ${APP}db_claim_$STORAGE.yaml
+if [ $? -ne 0 ]; then
+    echo "ERROR in ./createAppdb.sh"
+    exit 1
+fi
 rm ${APP}db_claim_$STORAGE.yaml
 
 # Attach volume claim
@@ -42,11 +50,25 @@ echo "Attach volume claim"
 oc volume dc/${APP}db$ENV --add --overwrite \
   --name=${APP}db-volume-1 --type=persistentVolumeClaim \
   --claim-name=${APP}db-claim --mount-path=//var/lib/mongodb
+if [ $? -ne 0 ]; then
+    echo "ERROR in ./createAppdb.sh"
+    exit 1
+fi
 
 # Adjust limits and deployment strategy
 echo "Adjust limits and deployment strategy"
 ./patchDeploy.sh ${APP}db$ENV
+if [ $? -ne 0 ]; then
+    echo "ERROR in ./createAppdb.sh"
+    exit 1
+fi
 
 # Create probes
 echo "Create probes"
 ./patchProbes.sh ${APP}db$ENV 27017
+if [ $? -ne 0 ]; then
+    echo "ERROR in ./createAppdb.sh"
+    exit 1
+fi
+
+exit 0

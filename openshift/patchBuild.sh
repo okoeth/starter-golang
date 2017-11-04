@@ -19,8 +19,19 @@ oc patch bc/$APP_NAME -p '{
         "source":{
             "sourceSecret":{
                 "name": "scmsecret"}}}}'
+if [ $? -ne 0 ]; then
+    echo "ERROR in ./patchBuild.sh"
+    exit 1
+fi
+
 oc patch bc/$APP_NAME -p '{
     "spec":{
         "resources":{
             "limits":{
                 "memory": "'$MEM_LIMIT'"}}}}'
+if [ $? -ne 0 ]; then
+    echo "ERROR in ./patchBuild.sh"
+    exit 1
+fi
+
+exit 0

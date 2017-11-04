@@ -6,7 +6,7 @@ fi
 NAMESPACE=$1
 APP_NAME=$2
 
-oc deleter all,pvc -l app=$APP_NAME -n $NAMESPACE
+oc delete all,pvc -l app=$APP_NAME -n $NAMESPACE
 if [ $? -ne 0 ]; then
     echo "ERROR in ./clean.sh"
     exit 1
