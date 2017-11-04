@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 if [ x = x$1 ]; then
     echo "Usage: ./patchBuild.sh <app> <mem-limit opt.>"
     exit

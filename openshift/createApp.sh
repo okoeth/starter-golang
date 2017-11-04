@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 if [ x = x$1 -o x = x$2 -o x = x$3 ]; then
     echo "Usage: ./createApp.sh "

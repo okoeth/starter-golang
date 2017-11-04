@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 if [ x = x$1 ]; then
     echo "Usage: ./createGluster.sh <namespace>"
     exit
