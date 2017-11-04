@@ -30,8 +30,7 @@ echo "Create volume claim"
 sed 's/APP/'$APP'/g' < appdb_claim_$STORAGE.yaml > ${APP}db_claim_$STORAGE.yaml
 oc create -f ${APP}db_claim_$STORAGE.yaml
 if [ $? -ne 0 ]; then
-    echo "ERROR creating volume in ./createAppdb.sh"
-    exit 1
+    echo "WARNING creating volume in ./createAppdb.sh failed"
 fi
 rm ${APP}db_claim_$STORAGE.yaml
 
