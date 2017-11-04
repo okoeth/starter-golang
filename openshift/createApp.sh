@@ -51,28 +51,6 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-echo "Create route"
-cat <<EOF | oc create -f -
-apiVersion: v1
-kind: Route
-metadata:
-  labels:
-    f5type: altemista
-  name: starter-golang
-spec:
-  port:
-    targetPort: 8000
-  tls:
-    insecureEdgeTerminationPolicy: Redirect
-    termination: edge
-  to:
-    kind: Service
-    name: ${APP}$ENV
-    weight: 100
-EOF
-if [ $? -ne 0 ]; then
-    echo "ERROR in ./createApp.sh"
-    exit 1
-fi
+echo "Create route: TODO"
 
 exit 0
