@@ -9,8 +9,6 @@ pipeline:
      - MONGODB_HOST=
     commands:
       - go version
-      - pwd
-      - ls /go/src
       - go get goji.io
       - go get goji.io/pat
       - go get github.com/golang/mock/gomock
@@ -25,10 +23,9 @@ pipeline:
     environment:
      - MONGODB_HOST=mongo
     commands:
-      - sleep 5
-      - pwd
-      - ls /go/src
+      - echo $TEST
       - go test
+    secrets: [ test ]
 
 services:
   mongo:
