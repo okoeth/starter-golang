@@ -7,7 +7,7 @@ pipeline:
     image: ebits/openshift-client
     commands:
       - oc version
-      - oc login jp1.altemista.cloud:8443 -u altemista -p altemi\$ta
+      - oc login jp1.altemista.cloud:8443 -u altemista -p altemi\$ta --insecure-skip-tls-verify
       - oc project starter-go-test
       - ls /go/src/github.com/okoeth/starter-golang/openshift
 
