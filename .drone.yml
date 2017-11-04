@@ -12,6 +12,7 @@ pipeline:
       - oc login jp1.altemista.cloud:8443 -u altemista -p altemi\$ta --insecure-skip-tls-verify
       - oc project $NAMESPACE
       - cd /go/src/github.com/okoeth/starter-golang/openshift
+      - ls
       - clean.sh $NAMESPACE starter
       - clean.sh $NAMESPACE starterdb
       - createBuildsecret.sh $NAMESPACE okoeth Tutn1xwgc
