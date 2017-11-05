@@ -153,3 +153,5 @@ The builds will be automated by adding a web hook to GitLab.
 
 Click the "Test" button behind the newly created web hook and check that a new build in OpenShift was triggered.
 
+### Create assembly line ###
+xxx
