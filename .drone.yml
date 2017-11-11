@@ -59,7 +59,7 @@ pipeline:
       local: false
 
   feature-test-integrate:
-    image: okoeth/openshift-client
+    image: appropriate/curl
     commands:
       - echo "Hello World"
       - curl http://starter.ng-f-test-b001.svc.cluster.local:8000/html/index.html
