@@ -62,6 +62,7 @@ pipeline:
     image: okoeth/openshift-client
     commands:
       - echo "Hello World"
+      - curl http://starter.ng-f-test-b001.svc.cluster.local:8000/html/index.html
     when:
       branch: f-test-*
       local: false
