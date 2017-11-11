@@ -42,6 +42,7 @@ pipeline:
     image: okoeth/openshift-client
     environment:
       - INSTANCE=172.30.0.1
+      - STORAGE=gluster
       - REPOSITORY=https://github.com/okoeth/starter-golang.git
       - NAMESPACE=stg-${DRONE_BRANCH}
     commands:
@@ -50,7 +51,7 @@ pipeline:
       - cd /go/src/github.com/okoeth/starter-golang/openshift
       - ./createNamespace.sh $NAMESPACE starter
       - ./createBuildSecret.sh $NAMESPACE $GIT_USER $GIT_PASSWORD
-      - ./createAppdb.sh $NAMESPACE starter aws
+      - ./createAppdb.sh $NAMESPACE starter $STORAGE
       - ./createApp.sh $NAMESPACE starter $REPOSITORY
     secrets: [ oc_user, oc_password, git_user, git_password ]
     when:
