@@ -44,7 +44,7 @@ pipeline:
       - INSTANCE=172.30.0.1
       - STORAGE=gluster
       - REPOSITORY=https://github.com/okoeth/starter-golang.git
-      - NAMESPACE=stg-${DRONE_BRANCH}
+      - NAMESPACE=ng-${DRONE_BRANCH}
     commands:
       - oc version
       - oc login $INSTANCE:443 -u $OC_USER -p $OC_PASSWORD --insecure-skip-tls-verify
