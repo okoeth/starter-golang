@@ -41,12 +41,12 @@ pipeline:
   feature-test-deploy:
     image: okoeth/openshift-client
     environment:
-      - INSTANCE=192.168.64.2:8443
+      - INSTANCE=172.30.0.1:443
       - REPOSITORY=https://github.com/okoeth/starter-golang.git
       - NAMESPACE=stg-${DRONE_BRANCH}
     commands:
       - oc version
-      - oc login $INSTANCE:8443 -u $OC_USER -p $OC_PASSWORD --insecure-skip-tls-verify
+      - oc login -u $OC_USER -p $OC_PASSWORD --insecure-skip-tls-verify
       - cd /go/src/github.com/okoeth/starter-golang/openshift
       - ./createNamespace.sh $NAMESPACE starter
       - ./createBuildSecret.sh $NAMESPACE $GIT_USER $GIT_PASSWORD
