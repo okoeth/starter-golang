@@ -56,6 +56,15 @@ pipeline:
     secrets: [ oc_user, oc_password, git_user, git_password ]
     when:
       branch: f-test-*
+      local: false
+
+  feature-test-integrate:
+    image: okoeth/openshift-client
+    commands:
+      - echo "Hello World"
+    when:
+      branch: f-test-*
+      local: false
 
 services:
   mongo:
