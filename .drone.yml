@@ -29,6 +29,7 @@ pipeline:
     when:
       branch: f-test-*
 
+
   feature-test-test:
     image: golang
     environment:
