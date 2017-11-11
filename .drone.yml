@@ -41,7 +41,7 @@ pipeline:
   feature-test-deploy:
     image: okoeth/openshift-client
     environment:
-      - INSTANCE=jp1.altemista.cloud
+      - INSTANCE=192.168.64.2:8443
       - REPOSITORY=https://github.com/okoeth/starter-golang.git
       - NAMESPACE=stg-${DRONE_BRANCH}
     commands:
