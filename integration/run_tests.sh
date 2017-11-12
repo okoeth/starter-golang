@@ -9,7 +9,7 @@ fi
 TEST_SERVER=$1
 
 echo "STEP 000: Wait for application to become ready"
-for i in {1..10}; do
+for i in 1 2 3 4 5 6 7 8 9 10; do
     echo Wait Step $i
     curl -s -k https://$TEST_SERVER/html/index.html
     NOT_AVAIL=`curl -s -k -X GET \
