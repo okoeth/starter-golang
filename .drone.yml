@@ -6,7 +6,7 @@ pipeline:
   feature-dev-build:
     image: golang
     environment:
-     - MONGODB_HOST=
+     - MONGODB_HOST=mongo
     commands:
       - go version
       # Vendoring hack
@@ -16,69 +16,25 @@ pipeline:
     when:
       branch: f-dev-*
 
-  # feature-test-build:
-  #   image: golang
-  #   environment:
-  #    - MONGODB_HOST=
-  #   commands:
-  #     - go version
-  #     # Vendoring hack
-  #     - cp -rf vendor/* /go/src
-  #     - go build
-  #     - go test
-  #   when:
-  #     branch: f-test-*
-
-  # feature-test-test:
-  #   image: golang
-  #   environment:
-  #    - MONGODB_HOST=mongo
-  #   commands:
-  #     - go test
-  #   when:
-  #     branch: f-test-*
-
-  feature-test-publish:
-    image: docker
-    privileged: true
+  feature-test-deploy:
+    image: okoeth/openshift-client
+    environment:
+      - INSTANCE=172.30.0.1
+      - STORAGE=gluster
+      - REPOSITORY=https://github.com/okoeth/starter-golang.git
+      - NAMESPACE=ng-${DRONE_BRANCH}
     commands:
-      - ls /var/run
-      - docker build --rm -t ng-f-test-b001/starter .
-  #    - docker run --rm octocat/hello-world --test
-  #    - docker push octocat/hello-world
-  #    - docker rmi octocat/hello-world
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock  
-  #   image: plugins/docker
-  #   registry: 172.30.1.1
-  #   username: developer
-  #   password: x
-  #   repo: ng-f-test-b001/starter
-  #   tags: latest   
-  #   when:
-  #     branch: f-test-*
-  #     local: false
-
-
-  # feature-test-deploy:
-  #   image: okoeth/openshift-client
-  #   environment:
-  #     - INSTANCE=172.30.0.1
-  #     - STORAGE=gluster
-  #     - REPOSITORY=https://github.com/okoeth/starter-golang.git
-  #     - NAMESPACE=ng-${DRONE_BRANCH}
-  #   commands:
-  #     - oc version
-  #     - oc login $INSTANCE:443 -u $OC_USER -p $OC_PASSWORD --insecure-skip-tls-verify
-  #     - cd /go/src/github.com/okoeth/starter-golang/openshift
-  #     - ./createNamespace.sh $NAMESPACE starter
-  #     - ./createBuildSecret.sh $NAMESPACE $GIT_USER $GIT_PASSWORD
-  #     - ./createAppdb.sh $NAMESPACE starter $STORAGE
-  #     - ./createApp.sh $NAMESPACE starter $REPOSITORY
-  #   secrets: [ oc_user, oc_password, git_user, git_password ]
-  #   when:
-  #     branch: f-test-*
-  #     local: false
+      - oc version
+      - oc login $INSTANCE:443 -u $OC_USER -p $OC_PASSWORD --insecure-skip-tls-verify
+      - cd /go/src/github.com/okoeth/starter-golang/openshift
+      - ./createNamespace.sh $NAMESPACE starter
+      - ./createBuildSecret.sh $NAMESPACE $GIT_USER $GIT_PASSWORD
+      - ./createAppdb.sh $NAMESPACE starter $STORAGE
+      - ./createApp.sh $NAMESPACE starter $REPOSITORY
+    secrets: [ oc_user, oc_password, git_user, git_password ]
+    when:
+      branch: f-test-*
+      local: false
 
   feature-test-integrate:
     image: okoeth/openshift-client
