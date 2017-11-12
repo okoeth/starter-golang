@@ -60,6 +60,7 @@ pipeline:
 
   feature-test-integrate:
     image: okoeth/openshift-client
+    pull: true
     environment:
       - TEST_SERVER=starter-ng-f-test-b001.192.168.64.2.nip.io
     commands:
