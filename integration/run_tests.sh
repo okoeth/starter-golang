@@ -8,6 +8,26 @@ fi
 
 TEST_SERVER=$1
 
+echo "STEP 000: Wait for application to become ready"
+NOT_AVAIL=`curl -s -k -X GET \
+  https://$TEST_SERVER/html/index.html | grep "Application is not available" | wc -l`
+if [ $NOT_AVAIL -eq 1 ]; then
+    echo "INFO Waiting for application to become available"
+    sleep 10
+fi
+NOT_AVAIL=`curl -s -k -X GET \
+  https://$TEST_SERVER/html/index.html | grep "Application is not available" | wc -l`
+if [ $NOT_AVAIL -eq 1 ]; then
+    echo "INFO Waiting for application to become available"
+    sleep 10
+fi
+NOT_AVAIL=`curl -s -k -X GET \
+  https://$TEST_SERVER/html/index.html | grep "Application is not available" | wc -l`
+if [ $NOT_AVAIL -eq 1 ]; then
+    echo "INFO Waiting for application to become available"
+    sleep 10
+fi
+
 echo "STEP 001: Create record"
 RECORD_ID=`curl -s -k -X POST \
   https://$TEST_SERVER/v1/greetings \
