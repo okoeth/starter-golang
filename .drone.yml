@@ -38,16 +38,16 @@ pipeline:
   #   when:
   #     branch: f-test-*
 
-  feature-test-publish:
-    image: plugins/docker
-    registry: 172.30.1.1
-    username: developer
-    password: x
-    repo: ng-f-test-b001/starter
-    tags: latest   
-    when:
-      branch: f-test-*
-      local: false
+  # feature-test-publish:
+  #   image: plugins/docker
+  #   registry: 172.30.1.1
+  #   username: developer
+  #   password: x
+  #   repo: ng-f-test-b001/starter
+  #   tags: latest   
+  #   when:
+  #     branch: f-test-*
+  #     local: false
 
 
   # feature-test-deploy:
@@ -75,6 +75,7 @@ pipeline:
     environment:
       - TEST_SERVER=starter-ng-f-test-b001.192.168.64.2.nip.io
     commands:
+      - ls /var/run
       - ./integration/run_tests.sh $TEST_SERVER
     when:
       branch: f-test-*
