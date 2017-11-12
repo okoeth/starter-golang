@@ -59,11 +59,10 @@ pipeline:
   #     local: false
 
   feature-test-integrate:
-    image: appropriate/curl
+    image: okoeth/openshift-client
     commands:
-      - echo "Hello World"
-      - ifconfig
-      - curl -k https://starter-ng-f-test-b001.192.168.64.2.nip.io/html/
+      - ls
+      - ./integration/run_tests.sh
     when:
       branch: f-test-*
       local: false
