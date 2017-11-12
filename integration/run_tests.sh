@@ -10,6 +10,8 @@ TEST_SERVER=$1
 
 echo "STEP 000: Wait for application to become ready"
 for i in {1..10}; do
+    echo Wait Step $i
+    curl -s -k https://$TEST_SERVER/html/index.html
     NOT_AVAIL=`curl -s -k -X GET \
     https://$TEST_SERVER/html/index.html | grep "Application is not available" | wc -l`
     if [ $NOT_AVAIL -eq 1 ]; then
