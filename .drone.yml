@@ -8,13 +8,12 @@ pipeline:
     environment:
      - MONGODB_HOST=mongo
     commands:
-      - go version
       # Vendoring hack
-      - cp -rf vendor/* /go/src
+      # - cp -rf vendor/* /go/src
       - go build
       - go test
     when:
-      branch: f-dev-*
+      branch: f-test-*
 
   feature-test-deploy:
     image: okoeth/openshift-client
