@@ -36,12 +36,12 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-echo "Start build"
-oc start-build ${APP} -F
-if [ $? -ne 0 ]; then
-    echo "ERROR starting build in ./createApp.sh"
-    exit 1
-fi
+#echo "Start build"
+#oc start-build ${APP} -F
+#if [ $? -ne 0 ]; then
+#    echo "ERROR starting build in ./createApp.sh"
+#    exit 1
+#fi
 
 echo "Create route"
 oc create route edge --service=${APP}

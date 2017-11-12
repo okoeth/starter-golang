@@ -16,11 +16,11 @@ oc patch dc/$SERVICE -p '{
 					"readinessProbe":{
 						"tcpSocket":{
 							"port":'$PORT'}, 
-						"initalDelaySeconds":"60",
-						"timeoutSeconds":"2",
-						"periodSeconds":"10",
-						"successThreshold":"1",
-						"failureThreshold":"3"}}]}}}}'
+						"initalDelaySeconds":60,
+						"timeoutSeconds":2,
+						"periodSeconds":10,
+						"successThreshold":1,
+						"failureThreshold":3}}]}}}}'
 
 if [ $? -ne 0 ]; then
     echo "ERROR in ./patchProbes.sh"
@@ -37,11 +37,11 @@ oc patch dc/$SERVICE -p '{
 					"livenessProbe":{
 						"tcpSocket":{
 							"port":'$PORT'}, 
-						"initalDelaySeconds":"60",
-						"timeoutSeconds":"2",
-						"periodSeconds":"10",
-						"successThreshold":"1",
-						"failureThreshold":"3"}}]}}}}'
+						"initalDelaySeconds":60,
+						"timeoutSeconds":2,
+						"periodSeconds":10,
+						"successThreshold":1,
+						"failureThreshold":3}}]}}}}'
 if [ $? -ne 0 ]; then
     echo "ERROR in ./patchProbes.sh"
     exit 1
