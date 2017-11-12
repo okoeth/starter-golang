@@ -38,7 +38,16 @@ pipeline:
   #   when:
   #     branch: f-test-*
 
-  # feature-test-publish:
+  feature-test-publish:
+    image: docker
+    commands:
+      - ls /var/run
+      - docker build --rm -t ng-f-test-b001/starter .
+  #    - docker run --rm octocat/hello-world --test
+  #    - docker push octocat/hello-world
+  #    - docker rmi octocat/hello-world
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  
   #   image: plugins/docker
   #   registry: 172.30.1.1
   #   username: developer
@@ -72,10 +81,10 @@ pipeline:
 
   feature-test-integrate:
     image: okoeth/openshift-client
+    privileged: true
     environment:
       - TEST_SERVER=starter-ng-f-test-b001.192.168.64.2.nip.io
     commands:
-      - ls /var/run
       - ./integration/run_tests.sh $TEST_SERVER
     when:
       branch: f-test-*
