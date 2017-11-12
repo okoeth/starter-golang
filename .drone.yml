@@ -3,7 +3,7 @@ workspace:
   path: src/github.com/okoeth/starter-golang
 
 pipeline:
-  feature-dev-build:
+  dev-build:
     image: golang
     environment:
      - MONGODB_HOST=mongo
@@ -11,9 +11,9 @@ pipeline:
       - go build
       - go test
     when:
-      branch: f-dev-*
+      branch: [ f-dev-*, master ]
 
-  feature-test-deploy:
+  test-deploy:
     image: okoeth/openshift-client
     environment:
       - INSTANCE=172.30.0.1
@@ -30,17 +30,17 @@ pipeline:
       - ./createApp.sh $NAMESPACE starter $REPOSITORY
     secrets: [ oc_user, oc_password, git_user, git_password ]
     when:
-      branch: f-test-*
+      branch: [ f-test-*, test ]
       local: false
 
-  feature-test-integrate:
+  test-integrate:
     image: okoeth/openshift-client
     environment:
-      - TEST_SERVER=starter-ng-f-test-b001.192.168.64.2.nip.io
+      - TEST_SERVER=starter-ng-${DRONE_BRANCH}.192.168.64.2.nip.io
     commands:
       - ./integration/run_tests.sh $TEST_SERVER
     when:
-      branch: f-test-*
+      branch: [ f-test-*, test ]
       local: false
 
 services:
