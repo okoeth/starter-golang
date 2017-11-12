@@ -60,9 +60,11 @@ pipeline:
 
   feature-test-integrate:
     image: okoeth/openshift-client
+    environment:
+      - TEST_SERVER=starter-ng-f-test-b001.192.168.64.2.nip.io
     commands:
       - ls
-      - ./integration/run_tests.sh
+      - ./integration/run_tests.sh $TEST_SERVER
     when:
       branch: f-test-*
       local: false
