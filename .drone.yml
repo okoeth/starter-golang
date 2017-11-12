@@ -40,6 +40,7 @@ pipeline:
 
   feature-test-publish:
     image: docker
+    privileged: true
     commands:
       - ls /var/run
       - docker build --rm -t ng-f-test-b001/starter .
@@ -81,7 +82,6 @@ pipeline:
 
   feature-test-integrate:
     image: okoeth/openshift-client
-    privileged: true
     environment:
       - TEST_SERVER=starter-ng-f-test-b001.192.168.64.2.nip.io
     commands:
