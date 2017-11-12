@@ -38,6 +38,18 @@ pipeline:
   #   when:
   #     branch: f-test-*
 
+  feature-test-publish:
+    image: plugins/docker
+    registry: 172.30.1.1
+    username: developer
+    password: x
+    repo: ng-f-test-b001/starter
+    tags: latest   
+    when:
+      branch: f-test-*
+      local: false
+
+
   # feature-test-deploy:
   #   image: okoeth/openshift-client
   #   environment:
@@ -60,11 +72,9 @@ pipeline:
 
   feature-test-integrate:
     image: okoeth/openshift-client
-    pull: true
     environment:
       - TEST_SERVER=starter-ng-f-test-b001.192.168.64.2.nip.io
     commands:
-      - ls
       - ./integration/run_tests.sh $TEST_SERVER
     when:
       branch: f-test-*
