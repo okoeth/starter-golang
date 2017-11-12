@@ -46,7 +46,7 @@ fi
 
 # Adjust limits and deployment strategy
 echo "Adjust limits and deployment strategy"
-./patchDeploy.sh ${APP}db
+./patchDeploy.sh ${APP}db 256Mi
 if [ $? -ne 0 ]; then
     echo "ERROR patching limits in ./createAppdb.sh"
     exit 1

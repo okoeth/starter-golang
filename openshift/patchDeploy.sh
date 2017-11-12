@@ -7,8 +7,8 @@ fi
 APP_NAME=$1
 
 if [ x = x$2 ]; then
-    echo "Default limit of 256Mi"
-    MEM_LIMIT=256Mi
+    echo "Default limit of 128Mi"
+    MEM_LIMIT=128Mi
 else
     echo "Custom limit of $2"
     MEM_LIMIT=$2

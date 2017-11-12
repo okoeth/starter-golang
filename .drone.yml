@@ -3,62 +3,45 @@ workspace:
   path: src/github.com/okoeth/starter-golang
 
 pipeline:
-  ##################################################################
-  ## Fast build
-  fast-dev-build:
+  dev-build:
     image: golang
     environment:
-     - MONGODB_HOST=
+     - MONGODB_HOST=mongo
     commands:
-      - go version
-      # Vendoring hack
-      - cp -rf vendor/* /go/src
       - go build
       - go test
     when:
       branch: [ f-dev-*, master ]
 
-  ##################################################################
-  ## Full build and deploy
-  full-test-build:
-    image: golang
-    environment:
-     - MONGODB_HOST=
-    commands:
-      - go version
-      # Vendoring hack
-      - cp -rf vendor/* /go/src
-      - go build
-      - go test
-    when:
-      branch: [ f-test-*, test ]
-
-  full-test-test:
-    image: golang
-    environment:
-     - MONGODB_HOST=mongo
-    commands:
-      - go test
-    when:
-      branch: [ f-test-*, test ]
-
-  full-test-deploy:
+  test-deploy:
     image: okoeth/openshift-client
     environment:
-      - INSTANCE=jp1.altemista.cloud
+      - INSTANCE=172.30.0.1
+      - STORAGE=gluster
       - REPOSITORY=https://github.com/okoeth/starter-golang.git
-      - NAMESPACE=stg-${DRONE_BRANCH}
+      - NAMESPACE=ng-${DRONE_BRANCH}
     commands:
       - oc version
-      - oc login $INSTANCE:8443 -u $OC_USER -p $OC_PASSWORD --insecure-skip-tls-verify
+      - oc login $INSTANCE:443 -u $OC_USER -p $OC_PASSWORD --insecure-skip-tls-verify
       - cd /go/src/github.com/okoeth/starter-golang/openshift
       - ./createNamespace.sh $NAMESPACE starter
       - ./createBuildSecret.sh $NAMESPACE $GIT_USER $GIT_PASSWORD
-      - ./createAppdb.sh $NAMESPACE starter aws
+      - ./createAppdb.sh $NAMESPACE starter $STORAGE
       - ./createApp.sh $NAMESPACE starter $REPOSITORY
     secrets: [ oc_user, oc_password, git_user, git_password ]
     when:
       branch: [ f-test-*, test ]
+      local: false
+
+  test-integrate:
+    image: okoeth/openshift-client
+    environment:
+      - TEST_SERVER=starter-ng-${DRONE_BRANCH}.192.168.64.2.nip.io
+    commands:
+      - ./integration/run_tests.sh $TEST_SERVER
+    when:
+      branch: [ f-test-*, test ]
+      local: false
 
 services:
   mongo:
