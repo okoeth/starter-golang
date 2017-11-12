@@ -37,7 +37,7 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "Start build"
-oc start-build ${APP} --wait
+oc start-build ${APP} -F
 if [ $? -ne 0 ]; then
     echo "ERROR starting build in ./createApp.sh"
     exit 1
