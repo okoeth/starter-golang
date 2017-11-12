@@ -63,7 +63,7 @@ pipeline:
     commands:
       - echo "Hello World"
       - ifconfig
-      - curl http://172.30.27.90:8000/html/index.html
+      - curl -k https://starter-ng-f-test-b001.192.168.64.2.nip.io/html/
     when:
       branch: f-test-*
       local: false
