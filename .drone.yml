@@ -8,8 +8,6 @@ pipeline:
     environment:
      - MONGODB_HOST=mongo
     commands:
-      # Vendoring hack
-      # - cp -rf vendor/* /go/src
       - go build
       - go test
     when:
@@ -40,6 +38,7 @@ pipeline:
     environment:
       - TEST_SERVER=starter-ng-f-test-b001.192.168.64.2.nip.io
     commands:
+      - curl -k -s https://starter-ng-f-test-b001.192.168.64.2.nip.io/html/index.html
       - ./integration/run_tests.sh $TEST_SERVER
     when:
       branch: f-test-*
