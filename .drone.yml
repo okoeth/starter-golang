@@ -11,7 +11,7 @@ pipeline:
       - go build
       - go test
     when:
-      branch: f-test-*
+      branch: f-dev-*
 
   feature-test-deploy:
     image: okoeth/openshift-client
