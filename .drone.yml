@@ -8,10 +8,13 @@ pipeline:
     environment:
      - MONGODB_HOST=mongo
     commands:
+      - echo ${DRONE_COMMIT_REF}
+      - echo ${DRONE_COMMIT_SHA}
       - go build
       - go test
     when:
       branch: [ f-dev-*, master ]
+      event: tag
 
   test-deploy:
     image: okoeth/openshift-client
@@ -42,6 +45,21 @@ pipeline:
     when:
       branch: [ f-test-*, test ]
       local: false
+
+  release-build:
+    image: docker
+    commands:
+      - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - docker build --rm -t okoeth/starter-golang:${DRONE_COMMIT_SHA} .
+      - docker push okoeth/starter-golang:${DRONE_COMMIT_SHA}
+      - docker rmi okoeth/starter-golang:${DRONE_COMMIT_SHA}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock    
+    secrets: [ docker_user, docker_password ]
+    when:
+      branch: [ test ]
+      event: tag
+      local: true
 
 services:
   mongo:
