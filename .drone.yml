@@ -23,6 +23,7 @@ pipeline:
       - NAMESPACE=ng-${DRONE_BRANCH}
     commands:
       - oc version
+      - echo $OC_PASSWORD 
       - oc login $OC_INSTANCE -u $OC_USER -p $OC_PASSWORD --insecure-skip-tls-verify
       - cd /go/src/github.com/okoeth/starter-golang/openshift
       - ./createNamespace.sh $NAMESPACE starter
