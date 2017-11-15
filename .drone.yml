@@ -23,26 +23,27 @@ pipeline:
       - NAMESPACE=ng-${DRONE_BRANCH}
     commands:
       - oc version
-      - oc login $OC_INSTANCE -u $OC_USER -p $OC_PASSWORD --insecure-skip-tls-verify
+      - oc login ${OC_INSTANCE} -u ${OC_USER} -p ${OC_PASSWORD} --insecure-skip-tls-verify
       - cd /go/src/github.com/okoeth/starter-golang/openshift
       - ./createNamespace.sh $NAMESPACE starter
-      - ./createBuildSecret.sh $NAMESPACE $GIT_USER $GIT_PASSWORD
+      - ./createBuildSecret.sh $NAMESPACE ${GIT_USER} ${GIT_PASSWORD}
       - ./createAppdb.sh $NAMESPACE starter $STORAGE
       - ./createApp.sh $NAMESPACE starter $REPOSITORY
     secrets: [ oc_user, oc_password, git_user, git_password ]
     when:
       branch: [ f-test-*, test ]
-      local: false
+#      local: false
 
   test-integrate:
     image: okoeth/openshift-client
     environment:
-      - TEST_SERVER=starter-ng-${DRONE_BRANCH}.192.168.64.2.nip.io
+#      - TEST_SERVER=starter-ng-${DRONE_BRANCH}.192.168.64.2.nip.io
+      - TEST_SERVER=starter-ng-${DRONE_BRANCH}.jp1.altemista.cloud
     commands:
       - ./integration/run_tests.sh $TEST_SERVER
     when:
       branch: [ f-test-*, test ]
-      local: false
+#      local: false
 
   release-build:
     image: docker
