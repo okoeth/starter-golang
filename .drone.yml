@@ -49,6 +49,7 @@ pipeline:
 
   release-build:
     image: docker
+    privileged: true
     commands:
       - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - docker build --rm -t okoeth/starter-golang:${DRONE_COMMIT_SHA} .
