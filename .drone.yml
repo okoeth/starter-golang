@@ -44,15 +44,18 @@ pipeline:
     when:
       branch: [ f-test-*, test ]
 
-  test-publish:
-    image: plugins/docker
-    username: $DOCKER_USER
-    password: $DOCKER_PASSWORD
-    repo: okoeth/starter-golang
-    tags: test-latest
-    secrets: [ docker_user, docker_password ]
-    when:
-      branch: [ test ]
+  # test-publish:
+  #   image: plugins/docker
+  #   username: $DOCKER_USER
+  #   password: $DOCKER_PASSWORD
+  #   repo: okoeth/starter-golang
+  #   tags: test-latest
+  #   environment:
+  #     - DOCKER_LAUNCH_DEBUG=true
+  #   secrets: [ docker_user, docker_password ]
+  #   debug: true
+  #   when:
+  #     branch: [ test ]
       
   release-build:
     image: docker
