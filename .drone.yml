@@ -16,13 +16,14 @@ pipeline:
   test-deploy:
     image: okoeth/openshift-client
     environment:
-      - INSTANCE=172.30.0.1:443
-      - STORAGE=gluster
+#      - OC_INSTANCE=172.30.0.1:443
+#      - STORAGE=gluster
+      - STORAGE=aws
       - REPOSITORY=https://github.com/okoeth/starter-golang.git
       - NAMESPACE=ng-${DRONE_BRANCH}
     commands:
       - oc version
-      - oc login $INSTANCE -u $OC_USER -p $OC_PASSWORD --insecure-skip-tls-verify
+      - oc login $OC_INSTANCE -u $OC_USER -p $OC_PASSWORD --insecure-skip-tls-verify
       - cd /go/src/github.com/okoeth/starter-golang/openshift
       - ./createNamespace.sh $NAMESPACE starter
       - ./createBuildSecret.sh $NAMESPACE $GIT_USER $GIT_PASSWORD
@@ -51,7 +52,7 @@ pipeline:
       - docker push okoeth/starter-golang:${DRONE_COMMIT_SHA}
       - docker rmi okoeth/starter-golang:${DRONE_COMMIT_SHA}
 #    volumes:
-#      - /var/run/docker.sock:/var/run/docker.sock    
+#       - /var/run/docker.sock:/var/run/docker.sock    
     secrets: [ docker_user, docker_password ]
     when:
       branch: [ prod ]
