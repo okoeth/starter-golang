@@ -54,12 +54,12 @@ pipeline:
       - docker build --rm -t okoeth/starter-golang:${DRONE_COMMIT_SHA} .
       - docker push okoeth/starter-golang:${DRONE_COMMIT_SHA}
       - docker rmi okoeth/starter-golang:${DRONE_COMMIT_SHA}
-#    volumes:
-#       - /var/run/docker.sock:/var/run/docker.sock    
+    volumes:
+       - /var/run/docker.sock:/var/run/docker.sock    
     secrets: [ docker_user, docker_password ]
     when:
       branch: [ prod ]
-      local: true
+#      local: true
 
   release-deploy:
     image: okoeth/openshift-client
