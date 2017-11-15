@@ -44,6 +44,16 @@ pipeline:
     when:
       branch: [ f-test-*, test ]
 
+  test-publish:
+    image: plugins/docker
+    username: $DOCKER_USER
+    password: $DOCKER_PASSWORD
+    repo: okoeth/starter-golang
+    tags: test-latest
+    secrets: [ docker_user, docker_password ]
+    when:
+      branch: [ test ]
+      
   release-build:
     image: docker
     commands:
@@ -56,6 +66,7 @@ pipeline:
     secrets: [ docker_user, docker_password ]
     when:
       branch: [ prod ]
+      local: true
 
   release-deploy:
     image: okoeth/openshift-client
