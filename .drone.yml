@@ -40,6 +40,7 @@ pipeline:
     commands:
        - echo "Running integration test"
        - ./integration/run_tests.sh starter-ng-${DRONE_BRANCH}.$OC_INSTANCE
+    secrets: [ oc_instance ]
     when:
       branch: [ f-test-*, test ]
 
