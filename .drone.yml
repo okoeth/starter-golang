@@ -23,13 +23,13 @@ pipeline:
       - NAMESPACE=ng-${DRONE_BRANCH}
     commands:
       - oc version
-      - oc login ${OC_INSTANCE} -u ${OC_USER} -p ${OC_PASSWORD} --insecure-skip-tls-verify
+      - oc login $OC_INSTANCE -u $OC_USER -p $OC_PASSWORD --insecure-skip-tls-verify
       - cd /go/src/github.com/okoeth/starter-golang/openshift
       - ./createNamespace.sh $NAMESPACE starter
-      - ./createBuildSecret.sh $NAMESPACE ${GIT_USER} ${GIT_PASSWORD}
+      - ./createBuildSecret.sh $NAMESPACE $GIT_USER $GIT_PASSWORD
       - ./createAppdb.sh $NAMESPACE starter $STORAGE
       - ./createApp.sh $NAMESPACE starter $REPOSITORY
-    secrets: [ oc_user, oc_password, git_user, git_password ]
+    secrets: [ oc_instance, oc_user, oc_password, git_user, git_password ]
     when:
       branch: [ f-test-*, test ]
 #      local: false
