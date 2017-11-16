@@ -19,7 +19,7 @@ pipeline:
 #      - OC_INSTANCE=172.30.0.1:443
 #      - STORAGE=gluster
       - STORAGE=aws
-      - REPOSITORY=https://github.com/okoeth/starter-golang.git
+      - REPOSITORY=https://github.com/okoeth/starter-golang.git#${DRONE_BRANCH}
       - NAMESPACE=ng-${DRONE_BRANCH}
     commands:
       - oc version
