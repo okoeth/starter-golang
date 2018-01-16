@@ -16,8 +16,8 @@ pipeline:
   test-deploy:
     image: okoeth/openshift-client
     environment:
-#      - OC_INSTANCE=172.30.0.1:443
-#      - STORAGE=gluster
+      - OC_INSTANCE=172.30.0.1:443
+      - STORAGE=gluster
       - STORAGE=aws
       - REPOSITORY=https://github.com/okoeth/starter-golang.git#${DRONE_BRANCH}
       - NAMESPACE=ng-${DRONE_BRANCH}
