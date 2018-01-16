@@ -9,7 +9,7 @@ fi
 TEST_SERVER=$1
 
 echo "STEP 000: Wait for application to become ready"
-for i in 1 2 3 4 5 6 7 8 9 10; do
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20; do
     NOT_AVAIL=`curl -s -k -X GET \
     https://$TEST_SERVER/html/ | grep "Gopher" | wc -l`
     if [ $NOT_AVAIL -eq 0 ]; then
