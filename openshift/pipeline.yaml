@@ -19,12 +19,14 @@ spec:
     jenkinsPipelineStrategy:
       jenkinsfile: |-
         node('maven') {
-          echo 'Hello branch'
-          //stage 'build'
-          //openshiftBuild(buildConfig: 'edge-anki-twin-build', showBuildLogs: 'true', namespace: 'starter-dev')
-          //stage 'push'
-          //openshiftBuild(buildConfig: 'edge-anki-twin-push', showBuildLogs: 'true', namespace: 'edge-dev')
-          //stage 'deploy'
-          //openshiftBuild(buildConfig: 'edge-anki-twin-deploy', showBuildLogs: 'true', namespace: 'edge-dev')
+          stage ('build') {
+            openshiftBuild(buildConfig: 'starter-dev', showBuildLogs: 'true', namespace: 'starter-dev')
+          }
+          stage ('deploy') {
+            openshiftDeloy(deployConfig: 'starter-dev', showBuildLogs: 'true', namespace: 'starter-dev')
+          }
+          stage ('test') {
+            //openshiftBuild(buildConfig: 'edge-anki-twin-deploy', showBuildLogs: 'true', namespace: 'starter-dev')
+          }
         }
 
